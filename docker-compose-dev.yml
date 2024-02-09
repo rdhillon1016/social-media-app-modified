@@ -7,20 +7,20 @@ services:
     depends_on:
       - api
     environment:
-      REACT_APP_API_URL: http://api:3002/
+      REACT_APP_API_URL: http://localhost:3002/
   api:
     build: ./api
     ports:
       - "3002:3002"
     environment:
       DB_NAME: test
-      MONGO_URI:
+      MONGO_URI: mongodb://mongo:27017
       FE_URL: http://localhost:3000
-      SECRET:
-      FB_CLIENT_ID:
-      FB_SECRET:
-      GOOGLE_CLIENT_ID:
-      GOOGLE_SECRET:
+      SECRET: something
+      FB_CLIENT_ID: something
+      FB_SECRET: something
+      GOOGLE_CLIENT_ID: something
+      GOOGLE_SECRET: something
     depends_on:
       - mongo
   mongo:
