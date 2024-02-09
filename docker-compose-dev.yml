@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      REACT_APP_API_URL: http://api:3002/
+  api:
+    build: ./api
+    ports:
+      - "3002:3002"
+    environment:
+      DB_NAME: test
+      MONGO_URI:
+      FE_URL: http://localhost:3000
+      SECRET:
+      FB_CLIENT_ID:
+      FB_SECRET:
+      GOOGLE_CLIENT_ID:
+      GOOGLE_SECRET:
+    depends_on:
+      - mongo
+  mongo:
+    build: ./mongo-test
+    ports:
+      - "27017:27017"
+

@@ -3,7 +3,7 @@ import { getOptions, postOptions, deleteOptions, putOptions } from "./utility";
 export async function handleUserPosts() {
   const options = getOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/user/`,
+    `${process.env.REACT_APP_API_URL}posts/user/`,
     options
   );
   return response;
@@ -12,7 +12,7 @@ export async function handleUserPosts() {
 export async function getOtherUsersPosts(id) {
   const options = getOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}`,
+    `${process.env.REACT_APP_API_URL}posts/${id}`,
     options
   );
   return response;
@@ -21,7 +21,7 @@ export async function getOtherUsersPosts(id) {
 export async function getPostLikes(id) {
   const options = getOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}/likes`,
+    `${process.env.REACT_APP_API_URL}posts/${id}/likes`,
     options
   );
   return response;
@@ -30,7 +30,7 @@ export async function getPostLikes(id) {
 export async function getPostComments(id) {
   const options = getOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}/comments`,
+    `${process.env.REACT_APP_API_URL}posts/${id}/comments`,
     options
   );
   return response;
@@ -39,7 +39,7 @@ export async function getPostComments(id) {
 export async function handleCreatePost(body) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/`,
+    `${process.env.REACT_APP_API_URL}posts/`,
     options
   );
   return response;
@@ -48,7 +48,7 @@ export async function handleCreatePost(body) {
 export async function handleCreateComment(body, id) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}/comments`,
+    `${process.env.REACT_APP_API_URL}posts/${id}/comments`,
     options
   );
   return response;
@@ -57,7 +57,7 @@ export async function handleCreateComment(body, id) {
 export async function handleCreateLike(id) {
   const options = postOptions();
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}/likes`,
+    `${process.env.REACT_APP_API_URL}posts/${id}/likes`,
     options
   );
   return response;
@@ -66,7 +66,7 @@ export async function handleCreateLike(id) {
 export async function handleDeletePost(id) {
   const options = deleteOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}`,
+    `${process.env.REACT_APP_API_URL}posts/${id}`,
     options
   );
   return response;
@@ -75,7 +75,7 @@ export async function handleDeletePost(id) {
 export async function updatePost(body, id) {
   const options = putOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}posts/${id}`,
+    `${process.env.REACT_APP_API_URL}posts/${id}`,
     options
   );
   return response;

@@ -7,7 +7,7 @@ import { postOptions } from "./utility";
 export async function handleLogin(body) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}auth/login`,
+    `${process.env.REACT_APP_API_URL}auth/login`,
     options
   );
   return response;
@@ -20,24 +20,24 @@ export async function handleLogin(body) {
 export async function handleSignup(body) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}auth/signup`,
+    `${process.env.REACT_APP_API_URL}auth/signup`,
     options
   );
   return response;
 }
 
 export async function googleSignIn() {
-  window.open(`${process.env.REACT_APP_TEST_URL}auth/login/google`, "_self");
+  window.open(`${process.env.REACT_APP_API_URL}auth/login/google`, "_self");
 }
 
 export async function fbSignIn() {
-  window.open(`${process.env.REACT_APP_TEST_URL}auth/login/facebook`, "_self");
+  window.open(`${process.env.REACT_APP_API_URL}auth/login/facebook`, "_self");
 }
 
 export async function debounceUsername(body) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
-    `${process.env.REACT_APP_TEST_URL}auth/username`,
+    `${process.env.REACT_APP_API_URL}auth/username`,
     options
   );
   return response;
