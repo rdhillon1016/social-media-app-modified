@@ -19,11 +19,11 @@ module.exports = new GoogleStrategy({
         friends: [],
         profilePicUrl: "https://api.dicebear.com/5.x/big-ears/svg?seed=Felix",
         googleId: profile.id,
-        password: "!@#(OK#)l;t94l;1kj234;lk1j234"
+        signedUpWithSocialMedia: true
       })
       checkUser = await user.save();
     }
-    return cb(null, await checkUser);
+    return cb(null, checkUser);
   } catch (error) {
     console.log(error)
     return cb(error, null)

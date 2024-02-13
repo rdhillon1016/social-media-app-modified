@@ -44,6 +44,9 @@ exports.loginUser = async (req, res, next) => {
 
     if (user === null) {
       next({ statusCode: 404, errors: ["Username or password is incorrect"] });
+    } else if (user.signedUpWithSocialMedia === true) {
+      next({ statusCode: 400, 
+        errors: ["Cannot login with username if account was signed up with social media"]});
     } else {
       const result = await bcrypt.compare(req.body.password, user.password);
 
