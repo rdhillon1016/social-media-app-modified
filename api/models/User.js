@@ -14,8 +14,7 @@ const UserSchema = new Schema({
   outgoing_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   incoming_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   bio: { type: String, maxlength: 200 },
-  googleId: { type: String },
-  facebookId: { type: String },
+  googleId: { type: String }
 });
 
 UserSchema.virtual("full_name").get(
