@@ -2,6 +2,7 @@
 const request = require('supertest');
 const db = require('../test_setup/db');
 const { app } = require('../app');
+const User = require('../models/User');
 
 beforeAll(async () => {
   await db.setUp();
@@ -13,6 +14,24 @@ afterEach(async () => {
 
 afterAll(async () => {
   await db.dropDatabase();
+});
+
+test('login (account made with external social media) does not work', async () => {
+  const userOne = new User({
+    username: 'user1',
+    email: 'testemail@gmail.com',
+    signedUpWithSocialMedia: true
+  });
+
+  await userOne.save();
+
+  await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'user1',
+      password: 'password'
+    })
+    .expect(400);
 });
 
 test('signup works', async () => {

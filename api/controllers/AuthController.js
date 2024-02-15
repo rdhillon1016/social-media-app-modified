@@ -18,8 +18,9 @@ exports.jwtLoginPost = [
 ];
 
 exports.googleSignIn = [
-
-  passport.authenticate(['google', 'jwt'], { scope: ['profile', 'email'] }),
+  passport.authenticate(['google', 'jwt'], {
+    scope: ['profile', 'email']
+  })
 ]
 
 exports.googleSignInCallback = [
