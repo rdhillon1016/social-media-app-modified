@@ -92,13 +92,23 @@ exports.executeOthersFeedQuery = async (req, res, next) => {
 exports.getUserFeedQuery = async (req, res, next) => {
   try {
     const { _id } = req.user;
-    const Posts = await Post.find({ author: _id })
+    const posts = await Post.find({ author: _id })
       .sort({ date: "desc" })
       .exec();
-    if (!Posts) {
+    if (posts.length === 0) {
       next({ statusCode: 404, errors: ["Could not find posts"] });
     } else {
-      res.send({ Posts, User: req.user });
+      res.send({ Posts: posts, 
+        User: {
+          username: req.user.username,
+          email: req.user.email,
+          profilePicUrl: req.user.profilePicUrl,
+          date_created: req.user.date_created,
+          friends: req.user.friends,
+          outgoing_requests: req.user.outgoing_requests,
+          incoming_requests: req.user.incoming_requests,
+          bio: req.user.bio
+        } });
     }
   } catch (error) {
     next({ statusCode: 500, errors: ["Internal server error"] });
