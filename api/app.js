@@ -7,7 +7,6 @@ require("dotenv").config();
 const passport = require("passport");
 const JWTStrategy = require("./strategies/jwt");
 const googlestrat = require('./strategies/googleStrategy');
-const fbstrat = require("./strategies/facebookStrategy");
 
 const app = express();
 app.use(cors({ origin: process.env.FE_URL }));
@@ -20,7 +19,6 @@ app.disable("x-powered-by");
 app.use(express.static(path.join(__dirname, "public")));
 
 
-passport.use(fbstrat);
 passport.use(googlestrat);
 passport.use(JWTStrategy);
 

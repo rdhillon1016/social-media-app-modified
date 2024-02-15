@@ -6,7 +6,7 @@ const { DateTime } = require("luxon");
 
 const UserSchema = new Schema({
   username: { type: String, required: true, minlength: 2 },
-  password: { type: String, required: true, minlength: 2 },
+  password: { type: String, minlength: 2 },
   email: { type: String, required: true, minlength: 5 },
   profilePicUrl: { type: String },
   date_created: { type: Date, required: true, default: Date.now() },
@@ -15,7 +15,7 @@ const UserSchema = new Schema({
   incoming_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   bio: { type: String, maxlength: 200 },
   googleId: { type: String },
-  facebookId: { type: String },
+  signedUpWithSocialMedia: { type: Boolean, required: true, default: false }
 });
 
 UserSchema.virtual("full_name").get(

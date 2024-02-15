@@ -18,16 +18,13 @@ exports.jwtLoginPost = [
 ];
 
 exports.googleSignIn = [
-
-  passport.authenticate(['google', 'jwt'], { scope: ['profile', 'email'] }),
-]
-
-exports.fbSignin = [
-  passport.authenticate(['facebook', 'jwt']),
+  passport.authenticate(['google', 'jwt'], {
+    scope: ['profile', 'email']
+  })
 ]
 
 exports.googleSignInCallback = [
-  passport.authenticate(['google', 'facebook', 'jwt'], {
+  passport.authenticate(['google', 'jwt'], {
     session: false,
     failureRedirect: `${process.env.FE_URL}/login`,
   }),

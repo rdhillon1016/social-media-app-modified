@@ -3,14 +3,28 @@ const User = require("../../models/User");
 
 exports.getUser = async (req, res, next) => {
   try {
-    res.status(200).send(req.user);
+    const {
+      _id,
+      email,
+      friends,
+      incoming_requests,
+      outgoing_requests,
+      username
+    } = req.user;
+    res.status(200).send({
+      _id,
+      email,
+      friends,
+      incoming_requests,
+      outgoing_requests,
+      username
+    });
   } catch (error) {
-    console.log(error);
     next({ statusCode: 500, errors: ["Internal Server Error"] });
   }
 };
 
-exports.getUsers = async (req, res, next) => {
+exports.getUsersContainingText = async (req, res, next) => {
   try {
     const { username } = req.params;
     const regex = new RegExp(username, "i");
@@ -19,7 +33,7 @@ exports.getUsers = async (req, res, next) => {
     })
       .select("_id username profilePicUrl")
       .limit(10);
-    if (!potentialFriends) {
+    if (potentialFriends.length === 0) {
       next({ statusCode: 404, errors: ["No Users Found"] });
     } else {
       res.status(200).send(potentialFriends);
@@ -48,7 +62,7 @@ exports.postSendFriendRequest = async (req, res, next) => {
     });
   }
 };
-exports.postacceptFriendRequest = async (req, res, next) => {
+exports.postAcceptFriendRequest = async (req, res, next) => {
   try {
     const friend = req.friend;
     const user = req.user;
@@ -70,7 +84,7 @@ exports.postacceptFriendRequest = async (req, res, next) => {
 exports.getFriendRequests = async (req, res, next) => {
   try {
     const requests = await User.findById(req.user._id)
-      .select("incoming_reuqests")
+      .select("incoming_requests")
       .populate("incoming_requests", "_id profilePicUrl username")
       .exec();
     if (!requests) {
@@ -106,7 +120,7 @@ exports.deleteFriendRequest = async (req, res, next) => {
     await friend.save();
     res
       .status(200)
-      .send({ sucess: [{ msg: "You deleted the friend request" }] });
+      .send({ success: [{ msg: "You deleted the friend request" }] });
   } catch (error) {
     next({
       statusCode: 500,
@@ -123,7 +137,7 @@ exports.deleteFriend = async (req, res, next) => {
     await friend.save();
     await req.user.save();
     res.status(200).send({
-      sucess: [{ msg: `You are no longer friends with ${friend.username}` }],
+      success: [{ msg: `You are no longer friends with ${friend.username}` }],
     });
   } catch (error) {
     next({

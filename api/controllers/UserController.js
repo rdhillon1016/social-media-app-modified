@@ -1,8 +1,15 @@
 const { sendResponseOnError } = require("../middleware/validators/util");
-const q = require("../middleware/query-executors/UserQuery");
-const v = require("../middleware/validators/userValidator");
+const q = require("../middleware/query-executors/UserQueryExecutor");
+const v = require("../middleware/validators/UserValidator");
+
 exports.getUser = [q.getUser];
-exports.getFriends = [...v.validateUsername, sendResponseOnError, q.getUsers];
+
+exports.findUsers = [
+  ...v.validateUsername, 
+  sendResponseOnError, 
+  q.getUsersContainingText
+];
+
 exports.postSendFriendRequest = [
   ...v.validateFriendIdParams,
   ...v.validateFriend,
@@ -18,12 +25,14 @@ exports.postAcceptFriendRequest = [
   ...v.validateFriendIdParams,
   ...v.validateFriend,
   ...v.checkIfFriends,
+  ...v.checkIncomingFriendRequestExists,
   sendResponseOnError,
-  q.postacceptFriendRequest,
+  q.postAcceptFriendRequest,
 ];
 exports.deleteFriendRequest = [
   ...v.validateFriendIdParams,
   ...v.validateFriend,
+  ...v.checkIncomingFriendRequestExists,
   sendResponseOnError,
   q.deleteFriendRequest,
 ];

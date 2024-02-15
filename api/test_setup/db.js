@@ -66,6 +66,20 @@ module.exports.setUpPostsTests = async () => {
   };
 };
 
+module.exports.setUpAuthTests = async () => {
+  const userOne = new User({
+    username: 'user1',
+    email: 'testemail@gmail.com',
+    signedUpWithSocialMedia: true
+  });
+
+  const savedUserOne = await userOne.save();
+
+  return {
+    userOne: savedUserOne
+  };
+};
+
 module.exports.dropDatabase = async () => {
   if (mongo) {
     await mongoose.connection.dropDatabase();
