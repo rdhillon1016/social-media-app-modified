@@ -25,12 +25,14 @@ exports.postAcceptFriendRequest = [
   ...v.validateFriendIdParams,
   ...v.validateFriend,
   ...v.checkIfFriends,
+  ...v.checkIncomingFriendRequestExists,
   sendResponseOnError,
-  q.postacceptFriendRequest,
+  q.postAcceptFriendRequest,
 ];
 exports.deleteFriendRequest = [
   ...v.validateFriendIdParams,
   ...v.validateFriend,
+  ...v.checkIncomingFriendRequestExists,
   sendResponseOnError,
   q.deleteFriendRequest,
 ];

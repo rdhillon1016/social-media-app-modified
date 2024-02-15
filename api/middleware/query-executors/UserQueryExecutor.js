@@ -20,7 +20,6 @@ exports.getUser = async (req, res, next) => {
       username
     });
   } catch (error) {
-    console.log(error);
     next({ statusCode: 500, errors: ["Internal Server Error"] });
   }
 };
@@ -63,7 +62,7 @@ exports.postSendFriendRequest = async (req, res, next) => {
     });
   }
 };
-exports.postacceptFriendRequest = async (req, res, next) => {
+exports.postAcceptFriendRequest = async (req, res, next) => {
   try {
     const friend = req.friend;
     const user = req.user;
@@ -121,7 +120,7 @@ exports.deleteFriendRequest = async (req, res, next) => {
     await friend.save();
     res
       .status(200)
-      .send({ sucess: [{ msg: "You deleted the friend request" }] });
+      .send({ success: [{ msg: "You deleted the friend request" }] });
   } catch (error) {
     next({
       statusCode: 500,
@@ -138,7 +137,7 @@ exports.deleteFriend = async (req, res, next) => {
     await friend.save();
     await req.user.save();
     res.status(200).send({
-      sucess: [{ msg: `You are no longer friends with ${friend.username}` }],
+      success: [{ msg: `You are no longer friends with ${friend.username}` }],
     });
   } catch (error) {
     next({

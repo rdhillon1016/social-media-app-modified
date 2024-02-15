@@ -46,6 +46,23 @@ exports.checkIfFriends = [
     })
     .bail(),
 ];
+
+exports.checkIncomingFriendRequestExists = [
+  param("friendId")
+    .custom(async (value, { req }) => {
+      try {
+        if (
+          req.friend.outgoing_requests.includes(req.user._id) &&
+          req.user.incoming_requests.includes(value)
+        ) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject("Friend request doesn't exist");
+        }
+      } catch (error) {}
+    })
+    .bail(),
+];
 exports.checkAlreadySentRequest = [
   param("friendId")
     .custom(async (value, { req }) => {
@@ -89,12 +106,12 @@ exports.validateBio = [
     .escape()
     .isLength({ min: 1 })
     .withMessage("Bio is too short")
-    .isLength({ max: 500 })
+    .isLength({ max: 200 })
     .withMessage("Bio is too long"),
 ];
 
 exports.checkIfInFriendsList = [
-  param("friendId").custom(async () => {
+  param("friendId").custom(async (value, { req }) => {
     try {
       if (
         req.user.friends.includes(req.friend._id) &&
@@ -105,9 +122,11 @@ exports.checkIfInFriendsList = [
         return Promise.reject("You are not friends");
       }
     } catch (error) {}
-  }),
+  })
 ];
 
 exports.validatePicUrl = [
-  body("picUrl").isURL().trim().withMessage("not valid url"),
+  body("picUrl").isURL().trim()
+    .matches(new RegExp("^https://api.dicebear.com/", "i"))
+    .withMessage("not valid url"),
 ];
