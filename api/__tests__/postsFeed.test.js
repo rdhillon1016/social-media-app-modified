@@ -275,3 +275,177 @@ describe('Get own posts', () => {
       .expect(404);
   });
 });
+
+describe('Get other person\'s posts', () => {
+  const MY_ID = '123456789123456789123456';
+  const FRIEND_ID = '123456789123456789123457';
+  const OUTGOING_USER_ID = '123456789123456789123458'
+  const INCOMING_USER_ID = '123456789123456789123455'
+  const UNKNOWN_USER_ID = '123456789123456789123459';
+
+  beforeEach(async () => {
+    const userOne = new User({
+      username: 'user1',
+      email: 'testemail@gmail.com',
+      password: await hashPassword('password'),
+      _id: MY_ID,
+      friends: [FRIEND_ID],
+      incoming_requests: INCOMING_USER_ID,
+      outgoing_requests: OUTGOING_USER_ID
+    });
+    const friendUser = new User({
+      username: 'friend',
+      email: 'friend@gmail.com',
+      password: await hashPassword('password'),
+      _id: FRIEND_ID,
+      friends: [MY_ID]
+    });
+    const outgoingUser = new User({
+      username: 'outgoing',
+      email: 'outgoing@gmail.com',
+      password: await hashPassword('password'),
+      _id: OUTGOING_USER_ID,
+      incoming_requests: [MY_ID]
+    });
+    const incomingUser = new User({
+      username: 'incoming',
+      email: 'incoming@gmail.com',
+      password: await hashPassword('password'),
+      _id: INCOMING_USER_ID,
+      outgoing_requests: [MY_ID]
+    });
+    const unknownUser = new User({
+      username: 'unknown',
+      email: 'unknown@gmail.com',
+      password: await hashPassword('password'),
+      _id: UNKNOWN_USER_ID
+    });
+
+    await userOne.save();
+    await friendUser.save();
+    await unknownUser.save();
+    await outgoingUser.save();
+    await incomingUser.save();
+
+    const res = await request(app)
+      .post('/auth/login')
+      .send({
+        username: 'user1',
+        password: 'password',
+      })
+      .expect(200);
+    expect(res.body).toHaveProperty('token');
+    [, userToken] = res.body.token.split(' ');
+  });
+
+  test('success', async () => {
+    const friendPost = new Post({
+      author: FRIEND_ID,
+      message: "hi"
+    });
+    await friendPost.save();
+
+    const res = await request(app)
+      .get(`/posts/user/${FRIEND_ID}`)
+      .auth(userToken, { type: 'bearer' })
+      .expect(200);
+    expect(res.body.Posts).toHaveLength(1);
+    expect(res.body).toHaveProperty("User");
+    expect(res.body.status).toEqual({
+      isFriend: true,
+      requestSent: false,
+      requestIncoming: false
+    });
+    expect(res.body.Author).toEqual(expect.objectContaining({
+      _id: FRIEND_ID
+    }))
+    expect(res.body.Author).toEqual(expect.not.objectContaining({
+      password: expect.anything()
+    }))
+  });
+
+  test('incoming friend request', async () => {
+    const incomingPost = new Post({
+      author: INCOMING_USER_ID,
+      message: "hi"
+    });
+    await incomingPost.save();
+
+    const res = await request(app)
+      .get(`/posts/user/${INCOMING_USER_ID}`)
+      .auth(userToken, { type: 'bearer' })
+      .expect(200);
+    expect(res.body.Posts).toEqual(null);
+    expect(res.body).toHaveProperty("User");
+    expect(res.body.status).toEqual({
+      isFriend: false,
+      requestSent: false,
+      requestIncoming: true
+    });
+    expect(res.body.Author).toEqual(expect.objectContaining({
+      _id: INCOMING_USER_ID
+    }))
+    expect(res.body.Author).toEqual(expect.not.objectContaining({
+      password: expect.anything()
+    }))
+  });
+
+  test('outgoing friend request', async () => {
+    const outgoingPost = new Post({
+      author: OUTGOING_USER_ID,
+      message: "hi"
+    });
+    await outgoingPost.save();
+
+    const res = await request(app)
+      .get(`/posts/user/${OUTGOING_USER_ID}`)
+      .auth(userToken, { type: 'bearer' })
+      .expect(200);
+    expect(res.body.Posts).toEqual(null);
+    expect(res.body).toHaveProperty("User");
+    expect(res.body.status).toEqual({
+      isFriend: false,
+      requestSent: true,
+      requestIncoming: false
+    });
+    expect(res.body.Author).toEqual(expect.objectContaining({
+      _id:  OUTGOING_USER_ID
+    }))
+    expect(res.body.Author).toEqual(expect.not.objectContaining({
+      password: expect.anything()
+    }))
+  });
+
+  test('unknown user', async () => {
+    const unknownPost = new Post({
+      author: UNKNOWN_USER_ID,
+      message: "hi"
+    });
+    await unknownPost.save();
+
+    const res = await request(app)
+      .get(`/posts/user/${UNKNOWN_USER_ID}`)
+      .auth(userToken, { type: 'bearer' })
+      .expect(200);
+    expect(res.body.Posts).toEqual(null);
+    expect(res.body).toHaveProperty("User");
+    expect(res.body.status).toEqual({
+      isFriend: false,
+      requestSent: false,
+      requestIncoming: false
+    });
+    expect(res.body.Author).toEqual(expect.objectContaining({
+      _id: UNKNOWN_USER_ID
+    }))
+    expect(res.body.Author).toEqual(expect.not.objectContaining({
+      password: expect.anything()
+    }))
+  });
+
+  test('id length is not 24 characters', async () => {
+    await request(app)
+      .get('/posts/123348849327')
+      .auth(userToken, { type: 'bearer' })
+      .expect(400);
+  });
+});

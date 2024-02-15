@@ -6,7 +6,6 @@ const {
   isUserAuthorOfLike,
 } = require("../query-executors/PostsQueryExecutor");
 
-// Not sure what to validate here
 exports.validatePostParams = [
   param("postId")
     .trim()

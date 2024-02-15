@@ -56,33 +56,40 @@ exports.executeOthersFeedQuery = async (req, res, next) => {
       requestSent: false,
       requestIncoming: false,
     };
-    let [Author, Posts] = await Promise.all([
-      User.findById(userId).exec(),
+    let [author, posts] = await Promise.all([
+      User.findById(userId).select({
+        password: 0,
+        googleId: 0,
+        signedUpWithSocialMedia: 0
+      }).exec(),
       Post.find({ author: userId })
         .sort({ date: 1 })
         .populate("author", "username _id profilePicUrl")
         .exec(),
     ]);
-    if (!Posts || !User) {
+    if (!posts || !author) {
       next({ statusCode: 404, errors: ["Could not find posts or user"] });
     } else if (user.friends.includes(userId)) {
       status.isFriend = true;
-      return res.status(200).send({ Posts, User: req.user, status, Author });
+      return res.status(200).send({ Posts: posts, User: {
+        username: req.user.username,
+        email: req.user.email,
+        profilePicUrl: req.user.profilePicUrl,
+        bio: req.user.bio
+      }, status, Author: author });
     } else if (user.outgoing_requests.includes(userId)) {
       status.requestSent = true;
-      return res
-        .status(200)
-        .send({ Posts: null, User: req.user, status, Author });
     } else if (user.incoming_requests.includes(userId)) {
       status.requestIncoming = true;
-      return res
-        .status(200)
-        .send({ Posts: null, User: req.user, status, Author });
-    } else {
-      return res
-        .status(200)
-        .send({ Posts: null, User: req.user, status, Author });
     }
+    return res
+        .status(200)
+        .send({ Posts: null, User: {
+          username: req.user.username,
+          email: req.user.email,
+          profilePicUrl: req.user.profilePicUrl,
+          bio: req.user.bio
+        }, status, Author: author });
   } catch (error) {
     console.log(error);
     next({ statusCode: 500, errors: ["Internal server error"] });

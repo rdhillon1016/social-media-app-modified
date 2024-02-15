@@ -104,7 +104,6 @@ describe('get post by id', () => {
       .get(`/posts/${userOnePostId}`)
       .auth(userTwoToken, { type: 'bearer' })
       .expect(200);
-    expect(res.body).toHaveProperty('Posts');
   });
 });
 

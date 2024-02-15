@@ -3,12 +3,9 @@ const PostsController = require("../controllers/PostsController");
 
 const router = express.Router();
 
-// tests needed
 router.get("/homefeed", PostsController.getFeed);
-// tests needed
 router.get("/user", PostsController.getPosts);
-// tests needed
-router.get("/:userId", PostsController.getOtherPosts);
+router.get("/user/:userId", PostsController.getOtherPosts);
 router.get("/:postId", PostsController.getPost);
 router.get("/:postId/comments", PostsController.getComments);
 router.get("/:postId/likes", PostsController.getLikes);
