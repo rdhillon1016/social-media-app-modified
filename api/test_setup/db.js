@@ -11,10 +11,7 @@ module.exports.setUp = async () => {
   mongo = await MongoMemoryServer.create();
   const url = mongo.getUri();
 
-  await mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(url);
 
   const db = mongoose.connection;
   // eslint-disable-next-line no-console

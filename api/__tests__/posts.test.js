@@ -54,7 +54,7 @@ test('successful logins', async () => {
 });
 
 describe('create new post', () => {
-  test('create post sucess', async () => {
+  test('create post success', async () => {
     const res = await request(app)
       .post('/posts')
       .auth(userOneToken, { type: 'bearer' })
