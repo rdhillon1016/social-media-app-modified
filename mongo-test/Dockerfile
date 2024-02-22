@@ -1,2 +1,2 @@
-FROM mongo:6.0.13
+FROM mongo:7.0.5
 COPY initial-data/* /docker-entrypoint-initdb.d/

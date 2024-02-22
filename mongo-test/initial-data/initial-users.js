@@ -1,0 +1,72 @@
+db.users.insertMany([
+  {
+    _id: '111111111111111111111111',
+    username: 'hello',
+    password: '$2a$10$9b6h9HuJfg7JrbVkwSooA.qa4H8wtliTE3w8xNUadiMZ/4dkMWNaq',
+    email: 'hello@hello.ca',
+    profilePicUrl: 'https://api.dicebear.com/5.x/big-ears/svg?seed=Felix',
+    date_created: Date.now(),
+    friends: ['222222222222222222222222'],
+    outgoing_requests: ['333333333333333333333333'],
+    incoming_requests: ['444444444444444444444444'],
+    bio: 'this is my bio',
+    signedUpWithSocialMedia: false,
+    __v: 0
+  },
+  {
+    _id: '222222222222222222222222',
+    username: 'hello2',
+    password: '$2a$10$9b6h9HuJfg7JrbVkwSooA.qa4H8wtliTE3w8xNUadiMZ/4dkMWNaq',
+    email: 'hello@hello.ca',
+    profilePicUrl: 'https://api.dicebear.com/5.x/big-ears/svg?seed=Felix',
+    date_created: Date.now(),
+    friends: ['111111111111111111111111'],
+    outgoing_requests: [],
+    incoming_requests: [],
+    bio: 'this is my bio and it is a little bit longer than the other ones',
+    signedUpWithSocialMedia: false,
+    __v: 0
+  },
+  {
+    _id: '333333333333333333333333',
+    username: 'hello3',
+    password: '$2a$10$9b6h9HuJfg7JrbVkwSooA.qa4H8wtliTE3w8xNUadiMZ/4dkMWNaq',
+    email: 'hello@hello.ca',
+    profilePicUrl: 'https://api.dicebear.com/5.x/big-ears/svg?seed=Felix',
+    date_created: Date.now(),
+    friends: [],
+    outgoing_requests: [],
+    incoming_requests: ['111111111111111111111111'],
+    bio: 'this is my bio',
+    signedUpWithSocialMedia: false,
+    __v: 0
+  },
+  {
+    _id: '444444444444444444444444',
+    username: 'hello4',
+    password: '$2a$10$9b6h9HuJfg7JrbVkwSooA.qa4H8wtliTE3w8xNUadiMZ/4dkMWNaq',
+    email: 'hello@hello.ca',
+    profilePicUrl: 'https://api.dicebear.com/5.x/big-ears/svg?seed=Felix',
+    date_created: Date.now(),
+    friends: [],
+    outgoing_requests: ['111111111111111111111111'],
+    incoming_requests: [],
+    bio: 'this is my bio',
+    signedUpWithSocialMedia: false,
+    __v: 0
+  },
+  {
+    _id: '555555555555555555555555',
+    username: 'hello5',
+    password: '$2a$10$9b6h9HuJfg7JrbVkwSooA.qa4H8wtliTE3w8xNUadiMZ/4dkMWNaq',
+    email: 'hello@hello.ca',
+    profilePicUrl: 'https://api.dicebear.com/5.x/big-ears/svg?seed=Felix',
+    date_created: Date.now(),
+    friends: [],
+    outgoing_requests: [],
+    incoming_requests: [],
+    bio: 'this is my bio',
+    signedUpWithSocialMedia: false,
+    __v: 0
+  }
+])

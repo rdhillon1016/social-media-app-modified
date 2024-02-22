@@ -17,8 +17,6 @@ services:
       MONGO_URI: mongodb://mongo:27017
       FE_URL: http://localhost:3000
       SECRET: something
-      FB_CLIENT_ID: something
-      FB_SECRET: something
       GOOGLE_CLIENT_ID: something
       GOOGLE_SECRET: something
     depends_on:
