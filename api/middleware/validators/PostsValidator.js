@@ -36,6 +36,10 @@ exports.validatePostBody = [
     .escape()
     .isLength({ min: 1, max: 500 })
     .withMessage("Message is required"),
+  body("images")
+    .optional()
+    .isInt({min: 0, max: 6})
+    .withMessage("Images number must be between 0 and 6")
 ];
 
 exports.validateCommentBody = [

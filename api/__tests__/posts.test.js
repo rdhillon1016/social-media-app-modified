@@ -83,6 +83,17 @@ describe('create new post', () => {
       })
       .expect(401);
   });
+
+  test('bad images number', async () => {
+    await request(app)
+      .post('/posts')
+      .auth(userOneToken, { type: 'bearer' })
+      .send({
+        message: 'hello',
+        images: 7
+      })
+      .expect(400);
+  });
 });
 
 describe('get post by id', () => {
