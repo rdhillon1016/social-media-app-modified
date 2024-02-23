@@ -31,6 +31,8 @@ const CreatePost = (props) => {
 
   const createPost = (e) => {
     e.preventDefault();
+    console.log("printing image num");
+    console.log(getImageNum(images));
     newPostMutation.mutate({
       message: textArea.current,
       event: e,
@@ -61,7 +63,9 @@ const CreatePost = (props) => {
     <div className={styles["create-post-container"]}>
       <form
         onSubmit={(e) => {
+          console.log("in the submit callback");
           createPost(e);
+          setImages([]);
         }}
       >
         <GeneralPostContainer props={props}>

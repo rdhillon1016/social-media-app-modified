@@ -241,11 +241,12 @@ exports.deleteLike = async (req, res, next) => {
 
 exports.executeCreatePostQuery = async (req, res, next) => {
   try {
-    const { message } = req.body;
+    const { message, images } = req.body;
     const { _id } = req.user;
     const post = new Post({
       author: _id,
       message,
+      images
     });
 
     const savedPost = await post.save();
