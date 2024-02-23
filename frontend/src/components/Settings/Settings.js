@@ -93,6 +93,8 @@ const Settings = (props) => {
     }, 300);
   };
 
+  console.log(settingsQuery.data);
+
   return (
     <div className={styles["settings-container"]}>
       <div>

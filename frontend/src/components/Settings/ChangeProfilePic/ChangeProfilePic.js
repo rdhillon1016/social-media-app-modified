@@ -3,6 +3,7 @@ import styles from "./ChangeProfilePic.module.css";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { updateProfilePic } from "../../../services/userService";
 const ChangeProfilePic = ({ ppUrl }) => {
+  console.log(ppUrl);
   const queryClient = useQueryClient();
   const [avi, setAvi] = useState(ppUrl);
   const rotateRef = useRef(null);
