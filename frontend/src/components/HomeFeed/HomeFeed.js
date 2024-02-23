@@ -1,25 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import CreatePost from "../CreatePost/CreatePost";
 import Post from "../Post/Post";
-// import styles from "./HomeFeed.module.css";
-// import ImageModal from "../ImageModal/ImageModal";
-// import { useNavigate } from "react-router-dom";
+import ImageModal from "../ImageModal/ImageModal";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getHomefeed } from "../../services/userService";
 import { v4 } from "uuid";
 import { InView } from "react-intersection-observer";
 
 const HomeFeed = () => {
-  // const navigate = useNavigate();
-  // const [isModalOpen, setModalOpen] = useState(false);
-  // const [modalImages, setModalImages] = useState([]);
-  // const [modalIndex, setModalIndex] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState([]);
+  const [modalIndex, setModalIndex] = useState(0);
 
-  // const handleImageClick = (images, index) => {
-  //   setModalImages(images);
-  //   setModalIndex(index);
-  //   setModalOpen(true);
-  // };
+  const handleImageClick = (images, index) => {
+    setModalImages(images);
+    setModalIndex(index);
+    setModalOpen(true);
+  };
 
   const fetchHomefeed = async ({ pageParam = 0 }) => {
     const res = await getHomefeed(pageParam);
@@ -55,7 +52,14 @@ const HomeFeed = () => {
             return (
               <React.Fragment key={v4()}>
                 {group.posts.map((post) => {
-                  return <Post key={v4()} post={post} user={group.user} />;
+                  return (
+                    <Post
+                      key={v4()}
+                      post={post}
+                      handlePostImageClick={handleImageClick}
+                      user={group.user}
+                    />
+                  );
                 })}
               </React.Fragment>
             );
@@ -85,6 +89,14 @@ const HomeFeed = () => {
         )}
       </div>
       <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
+      {isModalOpen && (
+        <ImageModal
+          onOverlayClick={() => setModalOpen(false)}
+          onClose={() => setModalOpen(false)}
+          images={modalImages}
+          index={modalIndex}
+        />
+      )}
     </>
   );
 };

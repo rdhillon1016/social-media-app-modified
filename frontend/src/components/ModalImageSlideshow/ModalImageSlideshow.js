@@ -16,7 +16,7 @@ const ModalImageSlideshow = (props) => {
 
   const handleForwardClick = (e) => {
     e.stopPropagation();
-    let newImageIndex = (imageIndex + 1) % images.length;
+    const newImageIndex = (imageIndex + 1) % images.length;
     setImageIndex(newImageIndex);
   };
 

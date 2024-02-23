@@ -18,7 +18,7 @@ exports.executeFeedQuery = async (req, res, next) => {
     const postDocs = await Post.find({
       author: { $in: [...req.user.friends, req.user._id] },
     })
-      .sort({ date: 1 })
+      .sort({ date: -1 })
       .populate("author", "username _id profilePicUrl")
       .limit(perPage)
       .skip(perPage * page)
@@ -241,11 +241,12 @@ exports.deleteLike = async (req, res, next) => {
 
 exports.executeCreatePostQuery = async (req, res, next) => {
   try {
-    const { message } = req.body;
+    const { message, images } = req.body;
     const { _id } = req.user;
     const post = new Post({
       author: _id,
       message,
+      images
     });
 
     const savedPost = await post.save();

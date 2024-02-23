@@ -12,7 +12,6 @@ const LikesView = ({ postID, setLikesLen }) => {
       return response.json();
     },
     onSuccess: (data) => {
-      console.log(data);
       setLikesLen(data.likes.length);
     },
   });

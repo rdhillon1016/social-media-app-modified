@@ -11,7 +11,10 @@ const Image = (props) => {
       {editable && (
         <button
           className={styles["delete-button"]}
-          onClick={() => handleRemove(index)}
+          onClick={(e) => {
+            e.preventDefault();
+            handleRemove(index);
+          }}
         >
           <FaTrashAlt />
         </button>

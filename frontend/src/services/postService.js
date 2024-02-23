@@ -12,7 +12,7 @@ export async function handleUserPosts() {
 export async function getOtherUsersPosts(id) {
   const options = getOptions;
   const response = await fetch(
-    `${process.env.REACT_APP_API_URL}posts/${id}`,
+    `${process.env.REACT_APP_API_URL}posts/user/${id}`,
     options
   );
   return response;
@@ -37,6 +37,7 @@ export async function getPostComments(id) {
 }
 
 export async function handleCreatePost(body) {
+  console.log(body);
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}posts/`,

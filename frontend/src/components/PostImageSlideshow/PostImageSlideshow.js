@@ -4,18 +4,19 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Image from "./Image/Image";
 
 const PostImageSlideshow = (props) => {
-  const { index, images, handlePostImageClick, editable, handleRemoveImage } =
-    props;
+  const { images, handlePostImageClick, editable, handleRemoveImage } = props;
 
-  const [imageIndex, setImageIndex] = useState(index || 0);
+  const [imageIndex, setImageIndex] = useState(0);
 
-  const handleBackClick = () => {
+  const handleBackClick = (e) => {
+    e.preventDefault();
     const newImageIndex = imageIndex === 0 ? images.length - 1 : imageIndex - 1;
     setImageIndex(newImageIndex);
   };
 
-  const handleForwardClick = () => {
-    let newImageIndex = (imageIndex + 1) % images.length;
+  const handleForwardClick = (e) => {
+    e.preventDefault();
+    const newImageIndex = (imageIndex + 1) % images.length;
     setImageIndex(newImageIndex);
   };
 
@@ -35,7 +36,12 @@ const PostImageSlideshow = (props) => {
         {images.map((imageSrc, index) => {
           return (
             <Image
-              handleRemove={handleRemoveImage}
+              handleRemove={(index) => {
+                const newImageIndex =
+                  images.length > 1 ? index % (images.length - 1) : 0;
+                setImageIndex(newImageIndex);
+                handleRemoveImage(index);
+              }}
               editable={editable}
               key={index}
               index={index}
@@ -43,7 +49,10 @@ const PostImageSlideshow = (props) => {
               currIndex={imageIndex}
               onClick={
                 handlePostImageClick
-                  ? () => handlePostImageClick(images, index)
+                  ? (e) => {
+                      e.preventDefault();
+                      handlePostImageClick(images, index);
+                    }
                   : undefined
               }
             />

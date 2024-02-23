@@ -1,18 +1,21 @@
 import React, { useState, Suspense, lazy } from "react";
 import GeneralPostContainer from "../GeneralPostContainer/GeneralPostContainer";
 import styles from "./Post.module.css";
-import { HiOutlineThumbUp /*HiThumbUp*/ } from "react-icons/hi";
+import PostImageSlideshow from "../PostImageSlideshow/PostImageSlideshow";
+import { HiOutlineThumbUp } from "react-icons/hi";
 import LikesView from "./LikesView/LikesView";
 import { handleCreateLike, getPostLikes } from "../../services/postService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { getImages } from "../../test-data/imageMapping";
+
 const LazyCommentsSection = lazy(() =>
   import("./CommentsSection/CommentsSection")
 );
 
-const Post = ({ post, user }) => {
-  const { date, likes, comments, message, _id, author } = post;
-  // const { post, handlePostImageClick } = props;
+const Post = ({ post, user, handlePostImageClick }) => {
+  const { date, likes, comments, message, _id, author, images } = post;
+  const imagesArray = getImages(images);
   const { userId } = useParams();
   const isOwner =
     user?._id && author?._id && user?._id !== author?._id
@@ -71,12 +74,12 @@ const Post = ({ post, user }) => {
           <span>{message}</span>
         </div>
       </GeneralPostContainer>
-      {/* <div className={styles["slideshow-container"]}>
+      <div className={styles["slideshow-container"]}>
         <PostImageSlideshow
-          images={images}
+          images={imagesArray}
           handlePostImageClick={handlePostImageClick}
         />
-      </div> */}
+      </div>
       <div className={styles["additional-info-container"]}>
         <div className={styles["post-info-container"]}>
           <button
