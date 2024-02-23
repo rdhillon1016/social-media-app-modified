@@ -20,8 +20,6 @@ const PostImageSlideshow = (props) => {
     setImageIndex(newImageIndex);
   };
 
-  console.log(imageIndex);
-
   return (
     <>
       {images.length > 1 ? (

@@ -22,7 +22,7 @@ const Modal = (props) => {
   }, []);
 
   return (
-    <div className={styles["transparent-overlay"]} onMouseDown={onOverlayClick}>
+    <div className={styles["transparent-overlay"]} onClick={onOverlayClick}>
       {fullWindow ? (
         <>
           <button className={styles["close-button"]} onClick={onClose}>
