@@ -9,7 +9,8 @@ exports.getUser = async (req, res, next) => {
       friends,
       incoming_requests,
       outgoing_requests,
-      username
+      username,
+      profilePicUrl
     } = req.user;
     res.status(200).send({
       _id,
@@ -17,7 +18,8 @@ exports.getUser = async (req, res, next) => {
       friends,
       incoming_requests,
       outgoing_requests,
-      username
+      username,
+      profilePicUrl
     });
   } catch (error) {
     next({ statusCode: 500, errors: ["Internal Server Error"] });
