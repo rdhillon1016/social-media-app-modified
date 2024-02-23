@@ -16,6 +16,11 @@ env:
 
 jobs:
   test-backend:
+    env:
+      SECRET: test
+      GOOGLE_CLIENT_ID: test
+      GOOGLE_SECRET: test
+
     runs-on: ubuntu-22.04
 
     strategy:

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "./ImageUploadButton.module.css";
 
 const ImageUploadButton = (props) => {
