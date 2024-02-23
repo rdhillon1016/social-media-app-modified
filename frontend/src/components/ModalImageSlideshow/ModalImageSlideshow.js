@@ -11,12 +11,10 @@ const ModalImageSlideshow = (props) => {
   const handleBackClick = (e) => {
     e.stopPropagation();
     const newImageIndex = imageIndex === 0 ? images.length - 1 : imageIndex - 1;
-    console.log(newImageIndex);
     setImageIndex(newImageIndex);
   };
 
   const handleForwardClick = (e) => {
-    console.log("hello");
     e.stopPropagation();
     const newImageIndex = (imageIndex + 1) % images.length;
     setImageIndex(newImageIndex);

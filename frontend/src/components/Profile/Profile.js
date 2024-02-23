@@ -93,11 +93,9 @@ const Profile = () => {
         {isModalOpen && (
           <ImageModal
             onOverlayClick={() => {
-              console.log("about to close");
               setModalOpen(false);
             }}
             onClose={() => {
-              console.log("about to close");
               setModalOpen(false);
             }}
             images={modalImages}
