@@ -34,15 +34,19 @@ Or you can run the frontend dev server + backend server outside of a container, 
 #### Start mongo (equipped with initial data)
 
 `cd mongo-test`
+
 `docker build . -t mymongo`
+
 `docker run -p 27017:27017 mymongo`
 
 #### Start API with live reload
 
 `cd api`
+
 `DB_NAME=test MONGO_URI=mongodb://localhost:27017 FE_URL=http://localhost:3000 SECRET=something GOOGLE_CLIENT_ID=something GOOGLE_SECRET=something npm run serverstart`
 
 #### Start frontend server with live reload
 
 `cd frontend`
+
 `REACT_APP_API_URL=http://localhost:3002/ npm start`
