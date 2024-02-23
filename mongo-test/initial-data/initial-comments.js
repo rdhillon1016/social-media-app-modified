@@ -1,20 +1,26 @@
+const helloUserID = ObjectId('111111111111111111111111');
+const hello2UserID = ObjectId('222222222222222222222222');
+
 db.comments.insertMany([
   {
-    _id: '123456789123456789123456',
+    _id: ObjectId('123456789123456789123456'),
     message: 'nice pic',
-    author: '111111111111111111111111',
-    date: Date.now(),
+    author: helloUserID,
+    date: new Date(),
+    __v: 0
   },
   {
-    _id: '123456789123456789123457',
+    _id: ObjectId('123456789123456789123457'),
     message: 'nice pic',
-    author: '222222222222222222222222',
-    date: Date.now(),
+    author: hello2UserID,
+    date: new Date(),
+    __v: 0
   },
   {
-    _id: '123456789123456789123458',
+    _id: ObjectId('123456789123456789123458'),
     message: 'nice pic',
-    author: '111111111111111111111111',
-    date: Date.now(),
+    author: helloUserID,
+    date: new Date(),
+    __v: 0
   }
 ])

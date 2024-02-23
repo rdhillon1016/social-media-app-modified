@@ -38,7 +38,7 @@ exports.validatePostBody = [
     .withMessage("Message is required"),
   body("images")
     .optional()
-    .isInt({min: 0, max: 6})
+    .isInt({min: 0, max: 7})
     .withMessage("Images number must be between 0 and 6")
 ];
 

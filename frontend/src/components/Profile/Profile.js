@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Profile.module.css";
 import ProfileHeader from "./ProfileHeader/ProfileHeader";
 import Post from "../Post/Post";
 import { AiOutlinePlus } from "react-icons/ai";
-// import ImageModal from "../ImageModal/ImageModal";
+import ImageModal from "../ImageModal/ImageModal";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 } from "uuid";
 import CreatePost from "../CreatePost/CreatePost";
@@ -16,14 +16,14 @@ import {
 const Profile = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  // const [isModalOpen, setModalOpen] = useState(false);
-  // const [modalImages, setModalImages] = useState([]);
-  // const [modalIndex, setModalIndex] = useState(0);
-  // const handleImageClick = (images, index) => {
-  //   setModalImages(images);
-  //   setModalIndex(index);
-  //   setModalOpen(true);
-  // };
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState([]);
+  const [modalIndex, setModalIndex] = useState(0);
+  const handleImageClick = (images, index) => {
+    setModalImages(images);
+    setModalIndex(index);
+    setModalOpen(true);
+  };
 
   const userProfileQuery = useQuery({
     queryKey: ["posts", userId],
@@ -48,7 +48,6 @@ const Profile = () => {
     enabled: !!userId,
     queryFn: async () => {
       const res = await getOtherUsersPosts(userId);
-      console.log(res);
       return res.json();
     },
   });
@@ -81,7 +80,7 @@ const Profile = () => {
               key={v4()}
               post={post}
               user={otherProfileQuery.data.User}
-              // handlePostImageClick={handleImageClick}
+              handlePostImageClick={handleImageClick}
             />
           ))
         ) : (
@@ -91,14 +90,20 @@ const Profile = () => {
         <button className={styles["create-post"]}>
           <AiOutlinePlus />
         </button>
-        {/* {isModalOpen && (
+        {isModalOpen && (
           <ImageModal
-            onOverlayClick={() => setModalOpen(false)}
-            onClose={() => setModalOpen(false)}
+            onOverlayClick={() => {
+              console.log("about to close");
+              setModalOpen(false);
+            }}
+            onClose={() => {
+              console.log("about to close");
+              setModalOpen(false);
+            }}
             images={modalImages}
             index={modalIndex}
           />
-        )} */}
+        )}
       </div>
     );
     // If you are not friends with the User whos profile you are looking at
@@ -159,7 +164,7 @@ const Profile = () => {
               key={v4()}
               post={post}
               user={userProfileQuery.data.User}
-              // handlePostImageClick={handleImageClick}
+              handlePostImageClick={handleImageClick}
             />
           ))
         ) : (
@@ -169,14 +174,14 @@ const Profile = () => {
         {/* <button className={styles["create-post"]}>
           <AiOutlinePlus />
         </button> */}
-        {/* {isModalOpen && (
+        {isModalOpen && (
           <ImageModal
             onOverlayClick={() => setModalOpen(false)}
             onClose={() => setModalOpen(false)}
             images={modalImages}
             index={modalIndex}
           />
-        )} */}
+        )}
       </div>
     );
   }

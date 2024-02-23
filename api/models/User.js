@@ -8,7 +8,7 @@ const UserSchema = new Schema({
   password: { type: String, minlength: 2 },
   email: { type: String, required: true, minlength: 5 },
   profilePicUrl: { type: String },
-  date_created: { type: Date, required: true, default: Date.now() },
+  date_created: { type: Date, required: true, default: new Date() },
   friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
   outgoing_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],
   incoming_requests: [{ type: Schema.Types.ObjectId, ref: "User" }],

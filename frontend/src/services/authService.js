@@ -30,10 +30,6 @@ export async function googleSignIn() {
   window.open(`${process.env.REACT_APP_API_URL}auth/login/google`, "_self");
 }
 
-export async function fbSignIn() {
-  window.open(`${process.env.REACT_APP_API_URL}auth/login/facebook`, "_self");
-}
-
 export async function debounceUsername(body) {
   const options = postOptions(JSON.stringify(body));
   const response = await fetch(

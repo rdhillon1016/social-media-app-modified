@@ -90,7 +90,7 @@ describe('create new post', () => {
       .auth(userOneToken, { type: 'bearer' })
       .send({
         message: 'hello',
-        images: 7
+        images: 11
       })
       .expect(400);
   });

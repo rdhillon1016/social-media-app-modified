@@ -22,15 +22,27 @@ On the frontend, **ReactJS**, the most popular frontend library, was used to cre
 
 The use of these technologies and tools demonstrates the project's focus on efficiency, security, and user experience. With its well-designed architecture, this project can serve as a strong foundation for building scalable and reliable web applications.
 
-#### Challenges
---- TODO ---
+### Dev notes
 
-### Goals
-- [x] Learn how to build a Restful API 
-- [x] Learn how to test an API 
-- [x] Learn how to host an API on GCP
-- [x] Learn how to host a frontend on AWS
-- [x] Learn how to Dockerize an API
-- [x] Implement async/await functions
-- [x] Learn how to validate incoming request 
+To run the frontend development server + backend API + MongoDB locally, you have two options:
 
+Run the docker-compose:
+`docker-compose -f docker-compose-dev.yml up`
+
+Or you can run the frontend dev server + backend server outside of a container, and run mongo inside one:
+
+#### Start mongo (equipped with initial data)
+
+`cd mongo-test`
+`docker build . -t mymongo`
+`docker run -p 27017:27017 mymongo`
+
+#### Start API with live reload
+
+`cd api`
+`DB_NAME=test MONGO_URI=mongodb://localhost:27017 FE_URL=http://localhost:3000 SECRET=something GOOGLE_CLIENT_ID=something GOOGLE_SECRET=something npm run serverstart`
+
+#### Start frontend server with live reload
+
+`cd frontend`
+`REACT_APP_API_URL=http://localhost:3002/ npm start`
