@@ -4,13 +4,16 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.38.0"
     }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.5"
-    }
   }
 }
 
 provider "aws" {
   region = "us-west-2"
+}
+resource "aws_ecr_repository" "api" {
+    name = "social_media_app_api"
+}
+
+resource "aws_ecr_repository" "mongo" {
+    name = "social_media_app_mongo"
 }

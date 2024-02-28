@@ -11,3 +11,13 @@ The solution I had in mind was to run the express app on ECS, put an AWS Applica
 ## Cleanup
 
 If you want to cleanup your entire account rather than just the resources defined by the Terraform, you can use gruntwork-io/cloud-nuke to nuke all the resources on your AWS account.
+
+## Prerequisites
+
+The terraform in this directory assumes you have images in some container registry already. I've included the folder `./container-registry` for an example of how to do this for ECR. You can run the following after `cd`ing into the directory.
+
+`terraform init`
+
+`terraform apply`
+
+`./setup-registry.sh <region-name> <aws-account-id>`
