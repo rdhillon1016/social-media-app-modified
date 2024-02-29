@@ -1,5 +1,5 @@
 resource "aws_efs_file_system" "mongo" {
-  encrypted = true
+  encrypted       = true
   throughput_mode = "elastic"
   protection {
     replication_overwrite = "ENABLED"

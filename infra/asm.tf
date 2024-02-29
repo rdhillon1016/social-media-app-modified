@@ -1,9 +1,9 @@
 resource "aws_secretsmanager_secret" "mongo-uri" {
-  name = "mongo-uri12214"
+  name = "mongouri"
 }
 
 resource "aws_secretsmanager_secret" "jwt-secret" {
-  name = "jwt-secret124214"
+  name = "jwtsecret"
 }
 
 resource "aws_secretsmanager_secret_version" "mongo-uri" {
