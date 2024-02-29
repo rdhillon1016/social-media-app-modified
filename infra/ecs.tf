@@ -52,18 +52,18 @@ resource "aws_ecs_task_definition" "backend" {
 
   container_definitions = jsonencode([
     {
-      name      = "api"
-      image     = var.api_image_uri
-      cpu       = 128
-      memory    = 256
+      name              = "api"
+      image             = var.api_image_uri
+      cpu               = 128
+      memory            = 256
       memoryReservation = 256
-      essential = false
+      essential         = false
       portMappings = [
         {
           containerPort = 3002
           hostPort      = 3002
-          appProtocol = "http"
-          protocol = "tcp"
+          appProtocol   = "http"
+          protocol      = "tcp"
         }
       ]
       environment = [
@@ -106,24 +106,24 @@ resource "aws_ecs_task_definition" "backend" {
       ]
     },
     {
-      name      = "mongo"
-      image     = var.mongo_image_uri
-      cpu       = 128
-      memory    = 256
+      name              = "mongo"
+      image             = var.mongo_image_uri
+      cpu               = 128
+      memory            = 256
       memoryReservation = 256
-      essential = true
+      essential         = true
       portMappings = [
         {
           containerPort = 27017
           hostPort      = 27017
-          protocol = "tcp"
+          protocol      = "tcp"
         }
       ]
       mountPoints = [
         {
           containerPath = "/db/data"
           sourceVolume  = "mongodb"
-          readOnly = false
+          readOnly      = false
         }
       ]
     }
@@ -140,36 +140,36 @@ resource "aws_ecs_task_definition" "backend" {
 
 # service
 resource "aws_ecs_service" "service" {
-  name = "backend-service"
-  cluster = aws_ecs_cluster.main.arn
-  task_definition = aws_ecs_task_definition.backend.arn
-  desired_count = 1
-  launch_type = "FARGATE"
-  deployment_maximum_percent = 200
+  name                               = "backend-service"
+  cluster                            = aws_ecs_cluster.main.arn
+  task_definition                    = aws_ecs_task_definition.backend.arn
+  desired_count                      = 1
+  launch_type                        = "FARGATE"
+  deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
-  health_check_grace_period_seconds = 0
-  enable_ecs_managed_tags = true
-  enable_execute_command = false
+  health_check_grace_period_seconds  = 0
+  enable_ecs_managed_tags            = true
+  enable_execute_command             = false
 
   load_balancer {
     target_group_arn = aws_lb_target_group.lb_tg.arn
-    container_name = "api"
-    container_port = 3002
+    container_name   = "api"
+    container_port   = 3002
   }
 
   deployment_circuit_breaker {
-    enable= true
+    enable   = true
     rollback = true
   }
 
   network_configuration {
-    subnets = [ aws_subnet.subnet.id, aws_subnet.subnet2.id ]
-    security_groups = [ aws_security_group.ecs.id ]
+    subnets          = [aws_subnet.subnet.id, aws_subnet.subnet2.id]
+    security_groups  = [aws_security_group.ecs.id]
     assign_public_ip = true
   }
 
   deployment_controller {
-    type= "ECS"
+    type = "ECS"
   }
 }
 
