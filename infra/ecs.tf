@@ -73,7 +73,7 @@ resource "aws_ecs_task_definition" "backend" {
         },
         {
           name  = "FE_URL"
-          value = "https://${aws_amplify_app.frontend.default_domain}"
+          value = "https://main.${aws_amplify_app.frontend.default_domain}"
         },
         {
           name  = "DB_NAME"

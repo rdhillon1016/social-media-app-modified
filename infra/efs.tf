@@ -1,9 +1,5 @@
 resource "aws_efs_file_system" "mongo" {
   encrypted = true
-  lifecycle_policy {
-    transition_to_archive = "AFTER_90_DAYS"
-    transition_to_ia      = "AFTER_30_DAYS"
-  }
   throughput_mode = "elastic"
   protection {
     replication_overwrite = "ENABLED"
