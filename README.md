@@ -1,9 +1,5 @@
 # social-media-app
 
-[LIVE APP](https://main.d1l2zslx6rge0v.amplifyapp.com/login)
-
-![social-media-app-screen-shot](https://user-images.githubusercontent.com/35308786/227627654-e28ac04e-2622-4a93-88f0-d01cc98e8cae.png)
-
 ### Description
 This project demonstrates the development of a modern web application that utilizes a RESTful API to provide efficient communication between the server and client applications. The application is dockerized, making it easy to deploy and portable across different environments. Hosted on Google Cloud, it offers scalability and reliability to ensure seamless user experience.
 
@@ -20,7 +16,7 @@ This project showcases the development of a high-performance RESTful API using *
 
 On the frontend, **ReactJS**, the most popular frontend library, was used to create a smooth, interactive user interface. **CSS** was used for styling the application, ensuring a sleek and modern appearance. **Tan-Stack React Query** was utilized for fetch requests and caching, which provides a powerful and simple caching solution for ReactJS applications.
 
-The use of these technologies and tools demonstrates the project's focus on efficiency, security, and user experience. With its well-designed architecture, this project can serve as a strong foundation for building scalable and reliable web applications.
+For deployment infrastructure, AWS ECS was used to host the backend behind an Application Load Balancer listening for HTTPS requests using a self-signed certificate (for testing purposes). Amplify was used to deploy the frontend. All of this was provisioned using Terraform.
 
 ### Dev notes
 
