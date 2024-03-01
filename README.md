@@ -1,5 +1,8 @@
 # social-media-app
 
+![Screenshot 2024-02-28 175313](https://github.com/rdhillon1016/social-media-app-modified/assets/57784318/afadef66-1839-4aa1-9f15-49c77ca93a10)
+![Screenshot 2024-02-28 175249](https://github.com/rdhillon1016/social-media-app-modified/assets/57784318/2ebf9f88-8ec5-4c2e-84e1-7c6d02677b41)
+
 ### Description
 This project demonstrates the development of a modern web application that utilizes a RESTful API to provide efficient communication between the server and client applications. The application is dockerized, making it easy to deploy and portable across different environments. Hosted on Google Cloud, it offers scalability and reliability to ensure seamless user experience.
 
